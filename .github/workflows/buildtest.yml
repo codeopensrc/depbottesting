@@ -43,5 +43,4 @@ jobs:
           APP_DIR: ${{ steps.metadata.outputs.directory }}
           DEP_GROUP: ${{ steps.metadata.outputs.dependency-group }}
         run: |
-          ls ${APP_DIR}
           ls ${APP_DIR//-$DEP_GROUP/}
