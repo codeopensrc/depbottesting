@@ -1,0 +1,44 @@
+Name: Buildtest
+
+on:
+  workflow_call:
+    inputs:
+      job:
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      # The following properties are now available:
+      #  - steps.metadata.outputs.dependency-names
+      #  - steps.metadata.outputs.dependency-type
+      #  - steps.metadata.outputs.update-type
+
+      - name: Test received vars
+        with:
+          directory: ${{ inputs.directory }}
+        run: |
+          echo $INPUT_DIRECTORY
+          echo ${{ steps.metadata.outputs.dependency-names }}
+          echo ${{ steps.metadata.outputs.dependency-type }}
+          echo ${{ steps.metadata.outputs.update-type }}
+
+      - name: More test
+        with:
+          directory: ${{ inputs.directory }}
+        run: |
+          ls ${{ inputs.directory }}
+          echo "---"
+          ls $INPUT_DIRECTORY
+
