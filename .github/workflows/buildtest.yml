@@ -1,4 +1,4 @@
-Name: Buildtest
+name: Buildtest
 
 on:
   workflow_call:

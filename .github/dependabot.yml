@@ -6,19 +6,19 @@ updates:
     schedule:
       interval: "weekly"
     commit-message:
-      prefix: "[bot] actions"
+      prefix: "[depbot] actions"
   - package-ecosystem: npm
     directory: "/javascript"
     schedule:
       interval: "weekly"
     commit-message:
-      prefix: "[bot] javascript"
+      prefix: "[depbot] javascript"
   - package-ecosystem: bundler
     directory: "/ruby"
     schedule:
       interval: "weekly"
     commit-message:
-      prefix: "[bot] ruby"
+      prefix: "[depbot] ruby"
   - package-ecosystem: docker
     directory: "/docker"
     schedule:
@@ -29,7 +29,7 @@ updates:
       separator: "-"
     open-pull-requests-limit: 2
     commit-message:
-      prefix: "[bot] docker"
+      prefix: "[depbot] docker"
   ## python dir
   - package-ecosystem: docker
     directory: "/python"
@@ -41,7 +41,7 @@ updates:
       separator: "-"
     open-pull-requests-limit: 2
     commit-message:
-      prefix: "[bot] docker"
+      prefix: "[depbot] docker"
   - package-ecosystem: pip
     directory: "/python"
     schedule:
@@ -52,7 +52,7 @@ updates:
       separator: "-"
     open-pull-requests-limit: 2
     commit-message:
-      prefix: "[bot] pip"
+      prefix: "[depbot] pip"
   ## python2 dir
   - package-ecosystem: docker
     directory: "/python2"
@@ -64,7 +64,7 @@ updates:
       separator: "-"
     open-pull-requests-limit: 2
     commit-message:
-      prefix: "[bot] docker"
+      prefix: "[depbot] docker"
   - package-ecosystem: pip
     directory: "/python2"
     schedule:
@@ -75,7 +75,7 @@ updates:
       separator: "-"
     open-pull-requests-limit: 2
     commit-message:
-      prefix: "[bot] python"
+      prefix: "[depbot] python"
   - package-ecosystem: pip
     directory: "/python3"
     schedule:
@@ -93,7 +93,7 @@ updates:
       separator: "-"
     open-pull-requests-limit: 2
     commit-message:
-      prefix: "[bot] python"
+      prefix: "[depbot] python"
   - package-ecosystem: pip
     directory: "/python4"
     schedule:
@@ -112,4 +112,4 @@ updates:
       separator: "-"
     open-pull-requests-limit: 2
     commit-message:
-      prefix: "[bot] python"
+      prefix: "[depbot] python"
