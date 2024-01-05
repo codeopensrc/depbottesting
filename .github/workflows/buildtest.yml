@@ -26,19 +26,18 @@ jobs:
       #  - steps.metadata.outputs.update-type
 
       - name: Test received vars
-        #with:
-        #  directory: ${{ inputs.directory }}
+        env:
+          APP_DIR: ${{ steps.dependabot-metadata.outputs.directory }}
         run: |
           echo ${{ inputs.directory }}
           echo ${{ steps.metadata.outputs.dependency-names }}
           echo ${{ steps.metadata.outputs.dependency-type }}
           echo ${{ steps.metadata.outputs.update-type }}
+          echo ${APP_DIR}
+
 
       - name: More test
-        #with:
-        #  directory: ${{ inputs.directory }}
+        env:
+          APP_DIR: ${{ steps.dependabot-metadata.outputs.directory }}
         run: |
-          ls ${{ inputs.directory }}
-          echo "---"
-          ls $INPUT_DIRECTORY
-
+          ls ${APP_DIR}
