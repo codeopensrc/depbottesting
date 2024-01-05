@@ -27,17 +27,21 @@ jobs:
 
       - name: Test received vars
         env:
-          APP_DIR: ${{ steps.dependabot-metadata.outputs.directory }}
+          APP_DIR: ${{ steps.metadata.outputs.directory }}
+          DEP_GROUP: ${{ steps.metadata.outputs.dependency-group }}
         run: |
           echo ${{ inputs.directory }}
           echo ${{ steps.metadata.outputs.dependency-names }}
           echo ${{ steps.metadata.outputs.dependency-type }}
           echo ${{ steps.metadata.outputs.update-type }}
           echo ${APP_DIR}
+          echo ${APP_DIR//-$DEP_GROUP/}
 
 
       - name: More test
         env:
-          APP_DIR: ${{ steps.dependabot-metadata.outputs.directory }}
+          APP_DIR: ${{ steps.metadata.outputs.directory }}
+          DEP_GROUP: ${{ steps.metadata.outputs.dependency-group }}
         run: |
           ls ${APP_DIR}
+          ls ${APP_DIR//-$DEP_GROUP/}
