@@ -29,6 +29,7 @@ jobs:
         env:
           APP_DIR: ${{ steps.metadata.outputs.directory }}
           DEP_GROUP: ${{ steps.metadata.outputs.dependency-group }}
+          WORKING_DIR: ${APP_DIR//-$DEP_GROUP/}
         run: |
           echo ${{ inputs.directory }}
           echo ${{ steps.metadata.outputs.dependency-names }}
@@ -36,11 +37,17 @@ jobs:
           echo ${{ steps.metadata.outputs.update-type }}
           echo ${APP_DIR}
           echo ${APP_DIR//-$DEP_GROUP/}
+          ls
+          echo ${WORKING_DIR}
 
 
       - name: More test
         env:
           APP_DIR: ${{ steps.metadata.outputs.directory }}
           DEP_GROUP: ${{ steps.metadata.outputs.dependency-group }}
+          WORKING_DIR: ${APP_DIR//-$DEP_GROUP/}
+        working-directory: $WORKING_DIR
         run: |
+          ls
           ls ${APP_DIR//-$DEP_GROUP/}
+          ls $WORKING_DIR
