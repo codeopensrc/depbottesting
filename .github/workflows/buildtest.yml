@@ -52,4 +52,4 @@ jobs:
         run: |
           pwd
           ls
-          docker build -t local - < Dockerfile
+          docker build -t local .
