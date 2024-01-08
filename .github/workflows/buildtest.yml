@@ -25,29 +25,30 @@ jobs:
       #  - steps.metadata.outputs.dependency-type
       #  - steps.metadata.outputs.update-type
 
-      - name: Test received vars
+      - name: Get app dir
+        id: app-dir
         env:
-          APP_DIR: ${{ steps.metadata.outputs.directory }}
+          ORIG_OUTPUT_DIR: ${{ steps.metadata.outputs.directory }}
           DEP_GROUP: ${{ steps.metadata.outputs.dependency-group }}
-          WORKING_DIR: ${APP_DIR//-$DEP_GROUP/}
-        run: |
-          echo ${{ inputs.directory }}
-          echo ${{ steps.metadata.outputs.dependency-names }}
-          echo ${{ steps.metadata.outputs.dependency-type }}
-          echo ${{ steps.metadata.outputs.update-type }}
-          echo ${APP_DIR}
-          echo ${APP_DIR//-$DEP_GROUP/}
-          ls
-          echo ${WORKING_DIR}
+        run: >-
+          echo "APP_DIR=${ORIG_OUTPUT_DIR//-$DEP_GROUP/}" >> $GITHUB_OUTPUT
 
+      - name: Set env
+        run: >-
+          echo "APP_WORK_DIR=${{ github.workspace }}/${{ steps.app-dir.outputs.APP_DIR }}" >> $GITHUB_ENV
+
+      - name: Test received vars
+        run: |
+          echo "APP_WORK_DIR ${{ env.APP_WORK_DIR }}"
+          echo "DEP NAME ${{ steps.metadata.outputs.dependency-names }}"
+          echo "DEP TYPE ${{ steps.metadata.outputs.dependency-type }}"
+          echo "UPD TYPE ${{ steps.metadata.outputs.update-type }}"
+          ls ${{ env.APP_WORK_DIR }}
+          pwd
+          echo "space: ${{ github.workspace }}"
 
       - name: More test
-        env:
-          APP_DIR: ${{ steps.metadata.outputs.directory }}
-          DEP_GROUP: ${{ steps.metadata.outputs.dependency-group }}
-          WORKING_DIR: ${APP_DIR//-$DEP_GROUP/}
-        working-directory: $WORKING_DIR
+        working-directory: ${{ env.APP_WORK_DIR }}
         run: |
+          pwd
           ls
-          ls ${APP_DIR//-$DEP_GROUP/}
-          ls $WORKING_DIR
