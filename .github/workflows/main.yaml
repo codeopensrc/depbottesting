@@ -5,29 +5,26 @@ name: Main
   #  workflow_dispatch:
 on:
   pull_request:
-    types:
-      - closed
-    branches:
-      - main
+    types: [ closed ]
+    branches: [ main ]
+  pull_request:
+    types: [ opened ]
+  pull_request:
+    ## Find which one a rebase triggers
+    types: [ synchronize ]
+    #types: [ edited ]
 
 jobs:
-  #dependabot-build:
-  #  #if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
-  #  uses: ./.github/workflows/buildtest.yml
-  #  with:
-  #    job: build
-  #  secrets: inherit
+  dependabot-build:
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    uses: ./.github/workflows/buildtest.yml
+    with:
+      job: build
+    secrets: inherit
 
   contains:
     runs-on: ubuntu-latest
     if: ${{ contains(github.event.pull_request.labels.*.name, 'dependencies') && contains(github.event.pull_request.labels.*.name, 'yes') && !contains(github.event.pull_request.labels.*.name, 'no') }}
-    steps:
-      - name: test
-        run: echo "${{ toJSON(github.event.pull_request.labels.*.name) }}";
-
-  notcontains:
-    runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.pull_request.labels.*.name, 'dependencies') }}
     steps:
       - name: test
         run: echo "${{ toJSON(github.event.pull_request.labels.*.name) }}";
