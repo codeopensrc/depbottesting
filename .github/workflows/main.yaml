@@ -1,18 +1,39 @@
 name: Main
 
+  #on:
+  #  pull_request:
+  #  workflow_dispatch:
 on:
   pull_request:
-  workflow_dispatch:
+    types:
+      - closed
+    branches:
+      - main
 
 jobs:
-  dependabot-build:
-    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
-    uses: ./.github/workflows/buildtest.yml
-    with:
-      job: build
-    secrets: inherit
-        
+  #dependabot-build:
+  #  #if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+  #  uses: ./.github/workflows/buildtest.yml
+  #  with:
+  #    job: build
+  #  secrets: inherit
 
+  deptest:
+    if: ${{ contains(github.event.pull_request.labels, "dependencies") }}
+    steps:
+      - name: test
+        run: echo "only dep PR label";
+
+  deptesttwo:
+    if: ${{ not contains(github.event.pull_request.labels, "dependencies") }}
+    steps:
+      - name: test
+        run: echo "should not run";
+
+  deptestthree:
+    steps:
+      - name: test
+        run: echo "always run";
       #- name: Add a label for all production dependencies
       #  if: steps.metadata.outputs.dependency-type == 'direct:production'
       #  run: gh pr edit "$PR_URL" --add-label "low"
