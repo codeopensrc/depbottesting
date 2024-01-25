@@ -8,6 +8,7 @@ on:
     types: [ opened, synchronize ]
     # maybe branch name filter needed, lets see. I think theyre all prefixed
     # with dependabot anyway so why not
+    # k next make sure it catches dependabot branches
     branches: [ 'dependabot**' ]
   #pull_request:
   #  ## Find which one a rebase triggers
