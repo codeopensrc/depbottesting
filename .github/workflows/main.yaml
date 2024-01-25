@@ -5,10 +5,7 @@ name: Main
   #  workflow_dispatch:
 on:
   pull_request:
-    types: [ closed ]
-    branches: [ main ]
-  pull_request:
-    types: [ opened ]
+    types: [ opened, synchronize ]
   #pull_request:
   #  ## Find which one a rebase triggers
   #  types: [ synchronize ]
@@ -22,20 +19,16 @@ jobs:
       job: build
     secrets: inherit
 
-  contains:
-    runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'dependencies') && contains(github.event.pull_request.labels.*.name, 'yes') && !contains(github.event.pull_request.labels.*.name, 'no') }}
-    steps:
-      - name: test
-        run: echo "${{ toJSON(github.event.pull_request.labels.*.name) }}";
-
-  justrun:
-    runs-on: ubuntu-latest
-    steps:
-      - name: test
-        run: |
-          echo "${{ toJSON(github.event.pull_request.labels.*.name) }}";
-          echo "${{ toJSON(github.event.pull_request.labels) }}";
+  ###TODO: It may be easier/simpler to just have it completely separate due to not being able to 
+  ###   have multiple on.pull_request directives in a single workflow file
+  #merge:
+  #  ### Get if PR closed
+  #  ## check if against main here or in workflow
+  #  if: ${{ github.event.pull_request.merged == true }}
+  #  uses: ./.github/workflows/mergetest.yml
+  #  with:
+  #    job: merge
+  #  secrets: inherit
 
       #- name: Add a label for all production dependencies
       #  if: steps.metadata.outputs.dependency-type == 'direct:production'
