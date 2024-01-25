@@ -20,7 +20,7 @@ jobs:
 
   contains:
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'dependencies') && contains(github.event.pull_request.labels, 'yes') && !contains(github.event.pull_request.labels, 'no') }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'dependencies') && contains(github.event.pull_request.labels.*.name, 'yes') && !contains(github.event.pull_request.labels.*.name, 'no') }}
     steps:
       - name: test
         run: echo "${{ toJSON(github.event.pull_request.labels.*.name) }}";
