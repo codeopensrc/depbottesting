@@ -27,7 +27,7 @@ jobs:
 
   deptesttwo:
     runs-on: ubuntu-latest
-    if: ${{ not contains(github.event.pull_request.labels, 'dependencies') }}
+    if: ${{ !contains(github.event.pull_request.labels, 'dependencies') }}
     steps:
       - name: test
         run: echo "should not run";
