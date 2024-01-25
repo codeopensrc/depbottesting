@@ -18,25 +18,26 @@ jobs:
   #    job: build
   #  secrets: inherit
 
-  deptest:
+  contains:
     runs-on: ubuntu-latest
     if: ${{ contains(github.event.pull_request.labels, 'dependencies') }}
     steps:
       - name: test
-        run: echo "only dep PR label";
+        run: echo "${{ github.event.pull_request.labels }}";
 
-  deptesttwo:
+  notcontains:
     runs-on: ubuntu-latest
     if: ${{ !contains(github.event.pull_request.labels, 'dependencies') }}
     steps:
       - name: test
-        run: echo "should not run";
+        run: echo "${{ github.event.pull_request.labels }}";
 
-  deptestthree:
+  justrun:
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: echo "always run";
+        run: echo "${{ github.event.pull_request.labels }}";
+
       #- name: Add a label for all production dependencies
       #  if: steps.metadata.outputs.dependency-type == 'direct:production'
       #  run: gh pr edit "$PR_URL" --add-label "low"
