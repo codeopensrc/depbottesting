@@ -19,18 +19,21 @@ jobs:
   #  secrets: inherit
 
   deptest:
-    if: ${{ contains(github.event.pull_request.labels, "dependencies") }}
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.pull_request.labels, 'dependencies') }}
     steps:
       - name: test
         run: echo "only dep PR label";
 
   deptesttwo:
-    if: ${{ not contains(github.event.pull_request.labels, "dependencies") }}
+    runs-on: ubuntu-latest
+    if: ${{ not contains(github.event.pull_request.labels, 'dependencies') }}
     steps:
       - name: test
         run: echo "should not run";
 
   deptestthree:
+    runs-on: ubuntu-latest
     steps:
       - name: test
         run: echo "always run";
