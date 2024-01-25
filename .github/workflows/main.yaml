@@ -20,7 +20,7 @@ jobs:
 
   contains:
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'dependencies') }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'dependencies') && contains(github.event.pull_request.labels, 'yes') && !contains(github.event.pull_request.labels, 'no') }}
     steps:
       - name: test
         run: echo "${{ toJSON(github.event.pull_request.labels.*.name) }}";
@@ -39,7 +39,6 @@ jobs:
         run: |
           echo "${{ toJSON(github.event.pull_request.labels.*.name) }}";
           echo "${{ toJSON(github.event.pull_request.labels) }}";
-          echo "${{ toJSON(github.event.pull_request) }}";
 
       #- name: Add a label for all production dependencies
       #  if: steps.metadata.outputs.dependency-type == 'direct:production'
