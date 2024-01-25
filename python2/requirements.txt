@@ -1,5 +1,5 @@
 flask==3.0.0
-flask-httpauth==4.7.0
+flask-httpauth==4.8.0
 gunicorn==21.1.0
 kubernetes==28.0.0
 psycopg2-binary==2.9.8
