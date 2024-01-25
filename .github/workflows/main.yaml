@@ -20,23 +20,23 @@ jobs:
 
   contains:
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels, 'dependencies') }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'dependencies') }}
     steps:
       - name: test
-        run: echo "${{ github.event.pull_request.labels }}";
+        run: echo "${{ github.event.pull_request.labels.*.name }}";
 
   notcontains:
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.pull_request.labels, 'dependencies') }}
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'dependencies') }}
     steps:
       - name: test
-        run: echo "${{ github.event.pull_request.labels }}";
+        run: echo "${{ github.event.pull_request.labels.*.name }}";
 
   justrun:
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: echo "${{ github.event.pull_request.labels }}";
+        run: echo "${{ github.event.pull_request.labels.*.name }}";
 
       #- name: Add a label for all production dependencies
       #  if: steps.metadata.outputs.dependency-type == 'direct:production'
