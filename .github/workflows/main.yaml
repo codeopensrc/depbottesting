@@ -9,7 +9,9 @@ on:
     # maybe branch name filter needed, lets see. I think theyre all prefixed
     # with dependabot anyway so why not
     # k next make sure it catches dependabot branches
-    branches: [ 'dependabot**' ]
+    # ### Figure out why this isnt working
+    #https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+    branches: [ 'dependabot*' ]
   #pull_request:
   #  ## Find which one a rebase triggers
   #  types: [ synchronize ]
