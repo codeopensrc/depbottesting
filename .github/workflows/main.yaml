@@ -18,12 +18,12 @@ on:
       - dep**
       - dependabot-*
       - dependabot-**
-      - 'dependabot*'
-      - 'dependabot**'
-      - 'dep*'
-      - 'dep**'
-      - 'dependabot-*'
-      - 'dependabot-**'
+      - 'dependabot[0-9a-zA-Z_.]*'
+      - 'dependabot[0-9a-zA-Z_.]**'
+      - 'dep[0-9a-zA-Z_.]*'
+      - 'dep[0-9a-zA-Z_.]**'
+      - 'dependabot-[0-9a-zA-Z_.]*'
+      - 'dependabot-[0-9a-zA-Z_.]**'
   #pull_request:
   #  ## Find which one a rebase triggers
   #  types: [ synchronize ]
