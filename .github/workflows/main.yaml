@@ -11,7 +11,7 @@ on:
     # k next make sure it catches dependabot branches
     # ### Figure out why this isnt working
     #https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
-    #branches: [ dependabot* ]
+    branches: [ dependabot* ]
   #pull_request:
   #  ## Find which one a rebase triggers
   #  types: [ synchronize ]
