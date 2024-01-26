@@ -77,6 +77,17 @@ updates:
     commit-message:
       prefix: "[depbot] python"
   - package-ecosystem: pip
+    directory: "/python5"
+    schedule:
+      interval: "daily"
+      time: "03:12"
+      timezone: America/Los_Angeles
+    pull-request-branch-name:
+      separator: "-"
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: "[depbot] python"
+  - package-ecosystem: pip
     directory: "/python3"
     schedule:
       interval: "daily"

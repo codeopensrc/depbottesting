@@ -5,7 +5,7 @@ name: Main
   #  workflow_dispatch:
 on:
   pull_request:
-    types: [ opened, synchronize ]
+    types: [ opened, reopened, synchronize ]
     # maybe branch name filter needed, lets see. I think theyre all prefixed
     # with dependabot anyway so why not
     # k next make sure it catches dependabot branches
