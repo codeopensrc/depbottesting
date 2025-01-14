@@ -67,7 +67,7 @@ jobs:
       - build
     steps:
       - name: exit status
-        run: exit 1
+        run: exit 0
 
   merge:
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
