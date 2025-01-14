@@ -58,3 +58,23 @@ jobs:
           pwd
           ls
           docker build -t local .
+
+  test:
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    name: Quick configurable test exit status
+    needs:
+      - build
+    run: exit 1
+
+  merge:
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    name: Enable auto-merge for Dependabot PRs
+    needs:
+      - test
+    env:
+      PR_URL: ${{github.event.pull_request.html_url}}
+      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    run: gh pr merge --auto --merge "$PR_URL" # Use Github CLI to merge automatically the PR
+
