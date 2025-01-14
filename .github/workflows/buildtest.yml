@@ -65,7 +65,9 @@ jobs:
     name: Quick configurable test exit status
     needs:
       - build
-    run: exit 1
+    steps:
+      - name: exit status
+        run: exit 1
 
   merge:
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
@@ -76,5 +78,8 @@ jobs:
     env:
       PR_URL: ${{github.event.pull_request.html_url}}
       GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    run: gh pr merge --auto --merge "$PR_URL" # Use Github CLI to merge automatically the PR
+    steps:
+      - name: merge
+        run: gh pr merge --auto --merge "$PR_URL" # Use Github CLI to merge automatically the PR
+
 
