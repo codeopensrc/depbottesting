@@ -30,8 +30,13 @@ jobs:
         env:
           ORIG_OUTPUT_DIR: ${{ steps.metadata.outputs.directory }}
           DEP_GROUP: ${{ steps.metadata.outputs.dependency-group }}
+          DEP_NAME: ${{ steps.metadata.outputs.dependency-names }}
         run: >-
-          echo "APP_DIR=${ORIG_OUTPUT_DIR//-$DEP_GROUP/}" >> $GITHUB_OUTPUT
+          if [[ -n $DEP_GROUP ]]; then
+            echo "APP_DIR=${ORIG_OUTPUT_DIR//-$DEP_GROUP/}" >> $GITHUB_OUTPUT
+          else
+            echo "APP_DIR=${ORIG_OUTPUT_DIR//-$DEP_NAME/}" >> $GITHUB_OUTPUT
+          fi
 
       - name: Set env
         run: >-
