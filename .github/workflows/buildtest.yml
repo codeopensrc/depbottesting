@@ -88,6 +88,6 @@ jobs:
       #- name: Approve a PR
       #  run: gh pr review --approve "$PR_URL"
       - name: merge
-        run: gh pr merge --auto --merge "$PR_URL" # Use Github CLI to merge automatically the PR
+        run: gh pr merge --auto --squash --merge "$PR_URL" # Use Github CLI to merge automatically the PR
 
 
