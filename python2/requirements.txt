@@ -2,5 +2,5 @@ flask==3.0.1
 flask-httpauth==4.6.0
 gunicorn==21.0.1
 kubernetes==31.0.0
-psycopg2-binary==2.9.6
+psycopg2-binary==2.9.10
 gunicorn[gevent]
