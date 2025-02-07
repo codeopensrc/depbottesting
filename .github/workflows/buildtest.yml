@@ -55,9 +55,9 @@ jobs:
 
       - name: Set env
         env:
-          CHANGED_FILES_APP_NAMES: ${{ steps.changed-files.outputs.changed }}
+          CHANGED_FILES_APP_NAMES: ${{ join(fromJSON(steps.changed-files.outputs.changed)) }}
         run: >-
-          echo "APP_WORK_DIR=${{ github.workspace }}/${{ join(fromJSON(steps.changed-files.outputs.changed)) }}" >> $GITHUB_ENV
+          echo "APP_WORK_DIR=${{ github.workspace }}/$CHANGED_FILES_APP_NAMES" >> $GITHUB_ENV
 
 
       - name: Test received vars
