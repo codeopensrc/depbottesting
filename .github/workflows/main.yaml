@@ -4,6 +4,9 @@ name: Main
   #  pull_request:
   #  workflow_dispatch:
 on:
+  push:
+    branches:
+      - main
   pull_request:
     types: [ opened, reopened, synchronize ]
   #pull_request:
@@ -27,6 +30,16 @@ jobs:
         run: |
           echo "opened/synced"
           echo "Login: ${{ github.event.pull_request.user.login }}"
+
+  ## Test additonal workflow after merge
+  main-echo:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo
+        run: |
+          echo "Job only run on main workflow"
 
   ###TODO: It may be easier/simpler to just have it completely separate due to not being able to 
   ###   have multiple on.pull_request directives in a single workflow file

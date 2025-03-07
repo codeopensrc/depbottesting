@@ -108,17 +108,28 @@ jobs:
           gh pr edit "$PR_URL" --remove-label "question";
           gh pr edit "$PR_URL" --add-label "wontfix";
 
-  #merge:
-  #  if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
-  #  runs-on: ubuntu-latest
-  #  name: Enable auto-merge for Dependabot PRs
-  #  needs:
-  #    - test
-  #  env:
-  #    PR_URL: ${{github.event.pull_request.html_url}}
-  #    GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  #  steps:
-  #    - name: Approve a PR
-  #      run: gh pr review --approve "$PR_URL"
-  #    - name: merge
-  #      run: gh pr merge --auto --squash --delete-branch "$PR_URL" # Use Github CLI to merge automatically the PR
+  merge:
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    name: Enable auto-merge for Dependabot PRs
+    needs:
+      - test
+    env:
+      PR_URL: ${{github.event.pull_request.html_url}}
+    steps:
+      - name: Approve a PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr review --approve "$PR_URL"
+
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.DEPENDABOT_MERGE_APP_ID }}
+          private-key: ${{ secrets.DEPENDABOT_MERGE_APP_PRIVATE_KEY }}
+
+      - name: merge
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: gh pr merge --auto --squash --delete-branch "$PR_URL" # Use Github CLI to merge automatically the PR
