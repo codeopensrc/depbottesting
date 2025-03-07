@@ -34,7 +34,7 @@ jobs:
   ## Test additonal workflow after merge
   main-echo:
     if: ${{ github.ref == 'refs/heads/main' }}
-    name: Test
+    name: Echo main only
     runs-on: ubuntu-latest
     steps:
       - name: echo
