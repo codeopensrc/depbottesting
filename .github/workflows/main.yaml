@@ -36,19 +36,23 @@ jobs:
         run: |
           echo "Job only run on main workflow"
 
+  ### TODO: Try giving the app full permissions and see if thats the issue
+  # It worked for dep bot merges so not sure
   tag-prerelease:
     if: ${{ github.ref == 'refs/heads/main' }}
     name: Prerelease staging tag
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
       - name: Generate a token
         id: generate-token
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ secrets.DEPENDABOT_MERGE_APP_ID }}
           private-key: ${{ secrets.DEPENDABOT_MERGE_APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v2
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
 
       - name: Create Tag
         env:
@@ -76,14 +80,17 @@ jobs:
     name: Release prod tag
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
       - name: Generate a token
         id: generate-token
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ secrets.DEPENDABOT_MERGE_APP_ID }}
           private-key: ${{ secrets.DEPENDABOT_MERGE_APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v2
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+
       - name: Create Tag
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
