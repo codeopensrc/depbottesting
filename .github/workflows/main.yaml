@@ -42,7 +42,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.DEPENDABOT_MERGE_APP_ID }}
+          private-key: ${{ secrets.DEPENDABOT_MERGE_APP_PRIVATE_KEY }}
+
       - name: Create Tag
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -65,7 +75,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.DEPENDABOT_MERGE_APP_ID }}
+          private-key: ${{ secrets.DEPENDABOT_MERGE_APP_PRIVATE_KEY }}
       - name: Create Tag
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
