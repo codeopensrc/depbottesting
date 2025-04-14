@@ -7,6 +7,11 @@ on:
   push:
     branches:
       - main
+    tags:
+      - "prod-*"
+      - "staging-*"
+      #- "prod-*.*.*"
+      #- "staging-*.*.*"
   pull_request:
     types: [ opened, reopened, synchronize ]
   #pull_request:
@@ -22,16 +27,6 @@ jobs:
       job: build
     secrets: inherit
 
-  dependabot-echo:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: echo
-        run: |
-          echo "opened/synced"
-          echo "Login: ${{ github.event.pull_request.user.login }}"
-
-  ## Test additonal workflow after merge
   main-echo:
     if: ${{ github.ref == 'refs/heads/main' }}
     name: Echo main only
@@ -40,6 +35,42 @@ jobs:
       - name: echo
         run: |
           echo "Job only run on main workflow"
+
+  tag-prerelease:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    name: Prerelease staging tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create Tag
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag -a "staging-${{ github.sha }}" -m "PreRelease staging-${{ github.sha }}"
+          git push origin "staging-${{ github.sha }}"
+
+  tag-echo:
+    if: ${{ contains(github.ref, 'refs/tags' }}
+    name: Echo tagged only
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo
+        run: |
+          echo "Job only run on tagged workflow"
+          echo ${{ github.ref }}
+
+  tag-release:
+    if: ${{ contains(github.ref, 'refs/tags/staging' }}
+    name: Release prod tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create Tag
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag -a "prod-${{ github.sha }}" -m "PreRelease prod-${{ github.sha }}"
+          git push origin "prod-${{ github.sha }}"
 
   ###TODO: It may be easier/simpler to just have it completely separate due to not being able to 
   ###   have multiple on.pull_request directives in a single workflow file
