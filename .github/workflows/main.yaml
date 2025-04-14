@@ -50,7 +50,7 @@ jobs:
           git push origin "staging-${{ github.sha }}"
 
   tag-echo:
-    if: ${{ contains(github.ref, 'refs/tags' }}
+    if: ${{ contains(github.ref, 'refs/tags') }}
     name: Echo tagged only
     runs-on: ubuntu-latest
     steps:
@@ -60,7 +60,7 @@ jobs:
           echo ${{ github.ref }}
 
   tag-release:
-    if: ${{ contains(github.ref, 'refs/tags/staging' }}
+    if: ${{ contains(github.ref, 'refs/tags/staging') }}
     name: Release prod tag
     runs-on: ubuntu-latest
     steps:
