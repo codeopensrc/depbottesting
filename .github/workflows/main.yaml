@@ -56,9 +56,11 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git tag -a "staging-${{ github.sha }}" -m "PreRelease staging-${{ github.sha }}"
-          git push origin "staging-${{ github.sha }}"
+          git tag "staging-${{ github.sha }}"
+          git push origin --tags
 
+        #git tag -a "staging-${{ github.sha }}" -m "PreRelease staging-${{ github.sha }}"
+        #git push origin "staging-${{ github.sha }}"
   tag-echo:
     if: ${{ contains(github.ref, 'refs/tags') }}
     name: Echo tagged only
@@ -88,9 +90,13 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git tag -a "prod-${{ github.sha }}" -m "PreRelease prod-${{ github.sha }}"
-          git push origin "prod-${{ github.sha }}"
+          git tag "prod-${{ github.sha }}"
+          git push origin --tags
 
+
+        ## git tag -a "prod-${{ github.sha }}" -m "PreRelease prod-${{ github.sha }}"
+        ## git push origin "prod-${{ github.sha }}"
+ 
   ###TODO: It may be easier/simpler to just have it completely separate due to not being able to 
   ###   have multiple on.pull_request directives in a single workflow file
   #merge:
