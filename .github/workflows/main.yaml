@@ -37,6 +37,12 @@ jobs:
           echo "github.event.head.user.login ${{ github.event.head.user.login }}"
           echo "github.event.base.user.login ${{ github.event.base.user.login }}"
           echo "github.actor ${{ github.actor }}"
+          echo "github.event.schedule.user.login ${{ github.event.schedule.user.login }}"
+
+
+
+## When we eventually schedule minor updates
+## https://github.com/orgs/community/discussions/25196#discussioncomment-3246783
 
   main-echo:
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -84,8 +90,19 @@ jobs:
           echo "Job only run on tagged workflow"
           echo ${{ github.ref }}
 
-  tag-release:
+  last-commit-author:
     if: ${{ contains(github.ref, 'refs/tags/staging') && github.actor == 'rt-depbot-automerge[bot]' }}
+    name: Get latest commit author
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo
+        run: echo "$(git log -1 --pretty=format:'%an')"
+
+  ## ONLY auto-tag if last commit is from dependabot
+  tag-release:
+    needs:
+      - last-commit-author
+    if: ${{ contains(github.ref, 'refs/tags/staging') && needs.last-commit-author.result == 'dependabot[bot]' }}
     name: Release prod tag
     runs-on: ubuntu-latest
     steps:
