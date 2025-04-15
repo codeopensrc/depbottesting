@@ -102,7 +102,7 @@ jobs:
         run: echo "$(git log -1 --pretty=format:'%an')"
       - name: Get author
         id: get-author
-        run: echo "author=$(git log -1 --pretty=format:'%an')" >> GITHUB_OUTPUT
+        run: echo "author=$(git log -1 --pretty=format:'%an')" >> $GITHUB_OUTPUT
       - name: sanity check
         run: echo "${{ steps.get-author.outputs.author }}"
 
