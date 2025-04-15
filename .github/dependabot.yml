@@ -23,7 +23,7 @@ updates:
     directory: "/docker"
     schedule:
       interval: "daily"
-      time: "9:40"
+      time: "09:40"
       timezone: America/Los_Angeles
     pull-request-branch-name:
       separator: "-"
@@ -35,7 +35,7 @@ updates:
     directory: "/python"
     schedule:
       interval: "daily"
-      time: "9:40"
+      time: "09:40"
       timezone: America/Los_Angeles
     pull-request-branch-name:
       separator: "-"
@@ -80,7 +80,7 @@ updates:
     directory: "/python5"
     schedule:
       interval: "daily"
-      time: "9:40"
+      time: "09:40"
       timezone: America/Los_Angeles
     pull-request-branch-name:
       separator: "-"
@@ -109,7 +109,7 @@ updates:
     directory: "/python4"
     schedule:
       interval: "daily"
-      time: "9:40"
+      time: "09:40"
       timezone: America/Los_Angeles
     groups:
       python-deps:
