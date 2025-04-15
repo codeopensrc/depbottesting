@@ -45,14 +45,14 @@ jobs:
     steps:
       - name: Generate a token
         id: generate-token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@v2
         with:
           app-id: ${{ secrets.DEPENDABOT_MERGE_APP_ID }}
           private-key: ${{ secrets.DEPENDABOT_MERGE_APP_PRIVATE_KEY }}
 
       - uses: actions/checkout@v2
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        with: 
+          token: ${{ steps.generate-token.outputs.token }}
 
       - name: Create Tag
         env:
@@ -82,14 +82,14 @@ jobs:
     steps:
       - name: Generate a token
         id: generate-token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@v2
         with:
           app-id: ${{ secrets.DEPENDABOT_MERGE_APP_ID }}
           private-key: ${{ secrets.DEPENDABOT_MERGE_APP_PRIVATE_KEY }}
 
       - uses: actions/checkout@v2
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        with: 
+          token: ${{ steps.generate-token.outputs.token }}
 
       - name: Create Tag
         env:
