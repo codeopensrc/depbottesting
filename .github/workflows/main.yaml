@@ -36,7 +36,7 @@ jobs:
           echo "github.event.commits[0].author.name ${{ github.event.commits[0].author.name }}"
           echo "github.event.head.user.login ${{ github.event.head.user.login }}"
           echo "github.event.base.user.login ${{ github.event.base.user.login }}"
-          echo "github_actor ${{ github_actor }}"
+          echo "github.actor ${{ github.actor }}"
 
   main-echo:
     if: ${{ github.ref == 'refs/heads/main' }}
