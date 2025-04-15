@@ -27,6 +27,17 @@ jobs:
       job: build
     secrets: inherit
 
+  echo-user:
+    name: Echo user
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo
+        run: |
+          echo "github.event.commits[0].author.name ${{ github.event.commits[0].author.name }}"
+          echo "github.event.head.user.login ${{ github.event.head.user.login }}"
+          echo "github.event.base.user.login ${{ github.event.base.user.login }}"
+          echo "GITHUB_ACTOR ${GITHUB_ACTOR}"
+
   main-echo:
     if: ${{ github.ref == 'refs/heads/main' }}
     name: Echo main only
@@ -74,7 +85,7 @@ jobs:
           echo ${{ github.ref }}
 
   tag-release:
-    if: ${{ contains(github.ref, 'refs/tags/staging') }}
+    if: ${{ contains(github.ref, 'refs/tags/staging') && github.event.head.user.login == 'dependabot[bot]' }}
     name: Release prod tag
     runs-on: ubuntu-latest
     steps:
