@@ -85,7 +85,7 @@ jobs:
           echo ${{ github.ref }}
 
   tag-release:
-    if: ${{ contains(github.ref, 'refs/tags/staging') && github.event.head.user.login == 'dependabot[bot]' }}
+    if: ${{ contains(github.ref, 'refs/tags/staging') && github.event.commits[0].author.name == 'dependabot[bot]' }}
     name: Release prod tag
     runs-on: ubuntu-latest
     steps:
