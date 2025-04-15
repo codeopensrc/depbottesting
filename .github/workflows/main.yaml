@@ -36,7 +36,7 @@ jobs:
           echo "github.event.commits[0].author.name ${{ github.event.commits[0].author.name }}"
           echo "github.event.head.user.login ${{ github.event.head.user.login }}"
           echo "github.event.base.user.login ${{ github.event.base.user.login }}"
-          echo "GITHUB_ACTOR ${GITHUB_ACTOR}"
+          echo "github_actor ${{ github_actor }}"
 
   main-echo:
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -85,7 +85,7 @@ jobs:
           echo ${{ github.ref }}
 
   tag-release:
-    if: ${{ contains(github.ref, 'refs/tags/staging') && github.event.commits[0].author.name == 'dependabot[bot]' }}
+    if: ${{ contains(github.ref, 'refs/tags/staging') && github.actor == 'dependabot[bot]' }}
     name: Release prod tag
     runs-on: ubuntu-latest
     steps:
