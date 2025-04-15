@@ -55,16 +55,14 @@ jobs:
           token: ${{ steps.generate-token.outputs.token }}
 
       - name: Create Tag
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git tag "staging-${{ github.sha }}"
-          git push origin --tags
+          git tag -a "staging-${{ github.sha }}" -m "PreRelease staging-${{ github.sha }}"
+          git push origin "staging-${{ github.sha }}"
 
-        #git tag -a "staging-${{ github.sha }}" -m "PreRelease staging-${{ github.sha }}"
-        #git push origin "staging-${{ github.sha }}"
+        #git tag "staging-${{ github.sha }}"
+        #git push origin --tags
   tag-echo:
     if: ${{ contains(github.ref, 'refs/tags') }}
     name: Echo tagged only
@@ -92,17 +90,15 @@ jobs:
           token: ${{ steps.generate-token.outputs.token }}
 
       - name: Create Tag
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git tag "prod-${{ github.sha }}"
-          git push origin --tags
+          git tag -a "prod-${{ github.sha }}" -m "Release prod-${{ github.sha }}"
+          git push origin "prod-${{ github.sha }}"
 
 
-        ## git tag -a "prod-${{ github.sha }}" -m "PreRelease prod-${{ github.sha }}"
-        ## git push origin "prod-${{ github.sha }}"
+        #git tag "prod-${{ github.sha }}"
+        #git push origin --tags
  
   ###TODO: It may be easier/simpler to just have it completely separate due to not being able to 
   ###   have multiple on.pull_request directives in a single workflow file
