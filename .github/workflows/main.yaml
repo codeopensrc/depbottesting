@@ -85,7 +85,7 @@ jobs:
           echo ${{ github.ref }}
 
   tag-release:
-    if: ${{ contains(github.ref, 'refs/tags/staging') && github.actor == 'dependabot[bot]' }}
+    if: ${{ contains(github.ref, 'refs/tags/staging') && github.actor == 'rt-depbot-automerge[bot]' }}
     name: Release prod tag
     runs-on: ubuntu-latest
     steps:
