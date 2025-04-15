@@ -98,8 +98,11 @@ jobs:
       author: ${{ steps.get-author.outputs.author }}
     steps:
       - uses: actions/checkout@v3
-      - name: get-author
+      - name: Get author
+        id: get-author
         run: echo "author=$(git log -1 --pretty=format:'%an')" >> "GITHUB_OUTPUT"
+      - name: sanity check
+        run: echo "${{ steps.get-author.outputs.author }}"
 
   ## ONLY auto-tag if last commit is from dependabot
   tag-release:
