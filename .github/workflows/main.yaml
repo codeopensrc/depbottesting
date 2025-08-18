@@ -67,7 +67,7 @@ jobs:
           app-id: ${{ secrets.DEPENDABOT_MERGE_APP_ID }}
           private-key: ${{ secrets.DEPENDABOT_MERGE_APP_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
         with: 
           token: ${{ steps.generate-token.outputs.token }}
 
@@ -97,7 +97,7 @@ jobs:
     outputs: 
       author: ${{ steps.get-author.outputs.author }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       - name: Print author
         run: echo "$(git log -1 --pretty=format:'%an')"
       - name: Get author
@@ -121,7 +121,7 @@ jobs:
           app-id: ${{ secrets.DEPENDABOT_MERGE_APP_ID }}
           private-key: ${{ secrets.DEPENDABOT_MERGE_APP_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
         with: 
           token: ${{ steps.generate-token.outputs.token }}
 
