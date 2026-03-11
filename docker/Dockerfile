@@ -1,4 +1,4 @@
-FROM python:3.15.0a6-alpine
+FROM python:3.15.0a7-alpine
 RUN apk update && \
     apk upgrade && \
     apk add curl bash
